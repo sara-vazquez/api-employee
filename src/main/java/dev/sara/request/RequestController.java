@@ -1,5 +1,7 @@
 package dev.sara.request;
 
+import java.time.LocalDate;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,9 +11,8 @@ public class RequestController {
     @GetMapping("requests")
     public RequestEntity index() {
 
-        RequestEntity request = new RequestEntity("sara", "27/08/2025 falta el formatter", "spring", "acabo de empezar y ya está fallando :(");
+        RequestEntity request1 = new RequestEntity("sara", LocalDate.of(2025, 8, 27), "spring", "ya me da problemas :(");
 
-        // class -> json = serializar . json -> class = deserializar
-        return request;
+        return request1;
     }
 }
