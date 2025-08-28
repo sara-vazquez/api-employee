@@ -19,7 +19,6 @@ public class RequestController {
       
     @GetMapping
     public List<RequestEntity> index() {
-
         return service.getEntities();
     }
 }
