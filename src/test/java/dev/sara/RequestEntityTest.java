@@ -30,8 +30,8 @@ public class RequestEntityTest {
         request.setDescription("No voy a llorar");
         
         assertThat(request.getId(), is(equalTo(1L)));
-        assertThat(request.getName(), is(equalTo("Pepita")));
-        assertThat(request.getDate(), is(equalTo(2025-8-28)));
+        assertThat(request.getName(), is(equalTo("Sara")));
+        assertThat(request.getDate(), is(equalTo(LocalDate.of(2025, 8, 28))));
         assertThat(request.getTopic(), is(equalTo("Spring")));
         assertThat(request.getDescription(), equalTo("No voy a llorar"));
 
