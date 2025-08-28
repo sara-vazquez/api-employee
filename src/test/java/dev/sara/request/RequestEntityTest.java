@@ -1,4 +1,4 @@
-package dev.sara;
+package dev.sara.request;
 
 import java.time.LocalDate;
 
@@ -8,7 +8,6 @@ import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
 import org.junit.jupiter.api.Test;
 
-import dev.sara.request.RequestEntity;
 
 public class RequestEntityTest {
     
