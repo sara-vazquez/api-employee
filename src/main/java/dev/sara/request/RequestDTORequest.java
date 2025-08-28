@@ -2,6 +2,14 @@ package dev.sara.request;
 
 import java.time.LocalDate;
 
-public record RequestDTORequest(Long id, String name, LocalDate date, String topic, String description) {
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+public record RequestDTORequest(
+    Long id, 
+    String name, 
+    @JsonFormat(pattern = "dd-MM-yyyy")LocalDate date, 
+    String topic, 
+    String description
+    ) {
 
 }

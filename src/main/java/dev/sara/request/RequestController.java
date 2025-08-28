@@ -1,18 +1,25 @@
 package dev.sara.request;
 
-import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import dev.sara.implementations.IGenericService;
+
 @RestController
+@RequestMapping(path = "${api-endpoint}/requests")
 public class RequestController {
+    private final IGenericService<RequestEntity> service;
+
+    public RequestController(IGenericService<RequestEntity> service) {
+        this.service = service;
+    }
       
-    @GetMapping(path = "${api-endpoint}/requests")
-    public RequestEntity index() {
+    @GetMapping
+    public List<RequestEntity> index() {
 
-        RequestEntity request1 = new RequestEntity(1L, "Sara", LocalDate.of(2025, 8, 27), "Spring", "No voy a llorar");
-
-        return request1;
+        return service.getEntities();
     }
 }

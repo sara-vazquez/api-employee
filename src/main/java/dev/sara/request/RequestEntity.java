@@ -12,6 +12,9 @@ import jakarta.persistence.Table;
 @Entity
 @Table(name ="requests")
 public class RequestEntity {
+
+    public RequestEntity() {
+    }
     
     @Id //define el campo 'id' como primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) //genera el id automáticamente
