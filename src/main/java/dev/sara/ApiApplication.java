@@ -1,4 +1,4 @@
-package dev.sara.api;
+package dev.sara;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
