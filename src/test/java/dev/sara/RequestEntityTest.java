@@ -1,13 +1,11 @@
 package dev.sara;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.time.LocalDate;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
-
-import java.time.LocalDate;
-
 import org.junit.jupiter.api.Test;
 
 import dev.sara.request.RequestEntity;
@@ -20,5 +18,22 @@ public class RequestEntityTest {
 
         assertThat(request, is(instanceOf(RequestEntity.class)));
         assertThat(request.getClass().getDeclaredFields().length, is(equalTo(5)));
+    }
+
+    @Test
+    void testRequestEntity() {
+        RequestEntity request = new RequestEntity();
+        request.setId(1L);
+        request.setName("Sara");
+        request.setDate(LocalDate.of(2025, 8, 28));
+        request.setTopic("Spring");
+        request.setDescription("No voy a llorar");
+        
+        assertThat(request.getId(), is(equalTo(1L)));
+        assertThat(request.getName(), is(equalTo("Pepita")));
+        assertThat(request.getDate(), is(equalTo(2025-8-28)));
+        assertThat(request.getTopic(), is(equalTo("Spring")));
+        assertThat(request.getDescription(), equalTo("No voy a llorar"));
+
     }
 }
