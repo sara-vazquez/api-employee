@@ -44,4 +44,9 @@ public class RequestEntityBuilder implements IRequestBuilder {
         request.setDescription(description);
         return this; 
     }
+
+    @Override
+    public RequestEntity build() {
+        return this.request;
+    }
 }
