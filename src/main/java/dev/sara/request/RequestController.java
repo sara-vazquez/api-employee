@@ -17,8 +17,8 @@ public class RequestController {
         this.service = service;
     }
       
-    @GetMapping
-    public List<RequestEntity> index() {
+    @GetMapping("")
+    public List<RequestDTOResponse> index() {
         return service.getEntities();
     }
 }
