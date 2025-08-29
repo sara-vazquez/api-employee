@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
+
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -36,10 +38,25 @@ public class RequestServiceImplTest {
             new RequestEntity(2L,"Paco", LocalDate.of(2025, 9, 5), "Fallo", "Fallo del sistema"));
 
         when(repository.findAll()).thenReturn(requestsMock);
-        List<RequestEntity> request = requestService.getEntities();
+        List<RequestDTOResponse> request = requestService.getEntities();
 
         assertThat(request.size(), is(equalTo(2)));
-        assertThat(request.get(0).getName(), is(equalTo("Conchi")));
-        assertThat(request.get(1).getName(), is(equalTo("Paco")));
+        assertThat(request.get(0).name(), is(equalTo("Conchi")));
+        assertThat(request.get(1).name(), is(equalTo("Paco")));
     }
+
+    @Test
+    void testStoreRequest_ShouldReturnRequestEntity() {
+        RequestDTORequest dto = new RequestDTORequest("Julia", LocalDate.of(2025, 8, 29), "Problemas", "El sistema da problemas");
+        when(repository.save(Mockito.any(RequestEntity.class))).thenReturn(new RequestEntity(3L, dto.name(),dto.date(),dto.topic(), dto.description()));
+
+        RequestDTOResponse storedEntity = requestService.storeEntity(dto);
+
+        assertThat(storedEntity.id(), is(equalTo(3L)));
+        assertThat(storedEntity.name(), is(equalTo("Julia")));
+        assertThat(storedEntity.date(), is(equalTo(LocalDate.of(2025, 8, 29))));
+        assertThat(storedEntity.topic(), is(equalTo("Problemas")));
+        assertThat(storedEntity.description(), is(equalTo("El sistema da problemas")));
+    }
+
 }

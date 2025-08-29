@@ -24,7 +24,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.sara.implementations.IGenericService;
 
 
-
 @WebMvcTest(controllers = RequestController.class)
 public class RequestControllerTest {
     
@@ -69,6 +68,25 @@ public class RequestControllerTest {
          .getResponse();
 
         assertThat(response.getContentAsString(), containsString(Conchi.name()));
+    }
+
+    @Test
+    void testStoreRequest_ShouldReturnStatus400_IfNameIsEmpty() throws Exception {
+        RequestDTORequest dto = new RequestDTORequest("", LocalDate.of(2025, 9, 5), "Fallo", "Fallo del sistema");
+        String json = mapper.writeValueAsString(dto);
+        when(requestService.storeEntity(dto)).thenReturn(null);
+        mockMvc.perform(post("/api/v1/requests").content(json).contentType("application/json"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void testStoreCountry_ShouldReturnNoContent_IfServiceDoesNotReturnAnyValue() throws Exception {
+        RequestDTORequest dto = new RequestDTORequest("Paco", LocalDate.of(2025, 9, 5), "Fallo", "Fallo del sistema");
+        String json = mapper.writeValueAsString(dto);
+
+        when(requestService.storeEntity(dto)).thenReturn(null);
+        mockMvc.perform(post("/api/v1/requests").content(json).contentType("application/json"))
+                .andExpect(status().isNoContent());
     }
 
 }

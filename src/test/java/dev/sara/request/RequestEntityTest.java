@@ -33,6 +33,23 @@ public class RequestEntityTest {
         assertThat(request.getDate(), is(equalTo(LocalDate.of(2025, 8, 28))));
         assertThat(request.getTopic(), is(equalTo("Spring")));
         assertThat(request.getDescription(), equalTo("No voy a llorar"));
+    }
 
+    @Test
+    void testRequestEntity2_WithBuilder() {
+        RequestEntity request = RequestEntity.builder()
+        .id(2L)
+        .name("Álvaro")
+        .date(LocalDate.of(2025, 8, 28))
+        .topic("Error")
+        .description("Error en el sistema")
+        .build();
+
+        assertThat(request, is(instanceOf(RequestEntity.class)));
+        assertThat(request.getId(), is(equalTo(2L)));
+        assertThat(request.getName(), is(equalTo("Álvaro")));
+        assertThat(request.getDate(), is(equalTo(LocalDate.of(2025, 8, 28))));
+        assertThat(request.getTopic(), is(equalTo("Error")));
+        assertThat(request.getDescription(), is(equalTo("Error en el sistema")));
     }
 }
