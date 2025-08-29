@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import org.junit.jupiter.api.DisplayName;
@@ -15,6 +16,7 @@ import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,7 +32,7 @@ public class RequestControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
-    private IGenericService<RequestEntity> requestService;
+    private IGenericService<RequestDTOResponse, RequestDTORequest> requestService;
 
     @Autowired
     ObjectMapper mapper;
@@ -38,9 +40,9 @@ public class RequestControllerTest {
     @Test
     @DisplayName("Should return all requests")
     void textIndex_ShouldReturnRequests() throws Exception{
-        RequestEntity request1 = new RequestEntity(1L,"Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema");
-        RequestEntity request2 = new RequestEntity(2L,"Paco", LocalDate.of(2025, 9, 5), "Fallo", "Fallo del sistema");
-        List<RequestEntity> requests = List.of(request1, request2);
+        RequestDTOResponse request1 = new RequestDTOResponse(1L,"Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema");
+        RequestDTOResponse request2 = new RequestDTOResponse(2L,"Paco", LocalDate.of(2025, 9, 5), "Fallo", "Fallo del sistema");
+        List<RequestDTOResponse> requests = List.of(request1, request2);
         String json = mapper.writeValueAsString(requests);
 
         when(requestService.getEntities()).thenReturn(requests);
@@ -52,6 +54,21 @@ public class RequestControllerTest {
         assertThat(response.getStatus(), is(equalTo(200)));
         assertThat(response.getContentAsString(), is(equalTo(json)));
 
+    }
+
+    @Test
+    void testStore_ShouldReturnStatus201() throws Exception {
+        RequestDTORequest dto = new RequestDTORequest("Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema");
+        RequestDTOResponse Conchi = new RequestDTOResponse(1L,"Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema");
+        String json = mapper.writeValueAsString(dto);
+
+        when(requestService.storeEntity(dto)).thenReturn(Conchi);
+        MockHttpServletResponse response = mockMvc.perform(post("/api/v1/requests").content(json).contentType("application/json"))
+         .andExpect(status().isCreated())
+         .andReturn()
+         .getResponse();
+
+        assertThat(response.getContentAsString(), containsString(Conchi.name()));
     }
 
 }
