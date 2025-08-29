@@ -2,6 +2,7 @@ package dev.sara.request;
 
 import java.time.LocalDate;
 
+import dev.sara.builder.RequestEntityBuilder;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -70,5 +71,10 @@ public class RequestEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    //nos devuelve el builder a través de un método estático
+    public static RequestEntityBuilder builder() {
+        return new RequestEntityBuilder();
     }
 }
