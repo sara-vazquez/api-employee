@@ -41,8 +41,5 @@ public class RequestServiceImplTest {
         assertThat(request.size(), is(equalTo(2)));
         assertThat(request.get(0).getName(), is(equalTo("Conchi")));
         assertThat(request.get(1).getName(), is(equalTo("Paco")));
-
     }
-    
-    
 }
