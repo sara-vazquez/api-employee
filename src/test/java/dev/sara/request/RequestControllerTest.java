@@ -90,4 +90,22 @@ public class RequestControllerTest {
                 .andExpect(status().isNoContent());
     }
 
+    @Test 
+    void testGetSortedRequests_ReturnSortedList() throws Exception {
+        RequestDTOResponse request1 = new RequestDTOResponse(1L, "Conchi", LocalDate.of(2025, 9, 2), "Error", "Se me cae el sistema", "Active", LocalDateTime.of(2025, 8, 28, 12, 0));
+        RequestDTOResponse request2 = new RequestDTOResponse(2L, "Paco", LocalDate.of(2025, 9, 1), "Fallo", "Fallo del sistema", "Active", LocalDateTime.of(2025, 9, 2, 14, 0));
+
+        List<RequestDTOResponse> sortedRequests = List.of(request2, request1);
+        String json = mapper.writeValueAsString(sortedRequests);
+        when(requestService.getEntities()).thenReturn(sortedRequests);
+        MockHttpServletResponse response = mockMvc.perform(get("/api/v1/requests/sorted"))
+                .andExpect(status().isOk())
+                .andReturn()
+                .getResponse();
+
+        assertThat(response.getStatus(), is(equalTo(200)));
+        assertThat(response.getContentAsString(), is(equalTo(json)));
+
+    }
+
 }

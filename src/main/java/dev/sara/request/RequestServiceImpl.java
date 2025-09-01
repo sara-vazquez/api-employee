@@ -1,7 +1,9 @@
 package dev.sara.request;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import dev.sara.implementations.IGenericService;
@@ -30,7 +32,17 @@ public class RequestServiceImpl implements IGenericService<RequestDTOResponse, R
     @Override
     public RequestDTOResponse storeEntity(RequestDTORequest requestDTORequest) {
         RequestEntity request = RequestMapper.toEntity(requestDTORequest);
+        request.setCreatedAt(LocalDateTime.now());
+
         RequestEntity requestStored = repository.save(request);
         return RequestMapper.toDTO(requestStored);
+    }
+
+    @Override
+    public List<RequestDTOResponse> getEntitiesSortedByDate() {
+        return repository.findAllByOrderByCreatedAtAsc()
+                         .stream()
+                         .map(RequestMapper::toDTO)
+                         .toList();
     }
 }

@@ -38,7 +38,7 @@ public class RequestController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable("id") int id) {
+    public String show(@PathVariable("id") Long id) {
         return new String();
     }
 }

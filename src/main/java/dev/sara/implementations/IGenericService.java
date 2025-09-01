@@ -7,5 +7,4 @@ public interface IGenericService<T, S> {
     public List<T> getEntities();
 
     public T storeEntity(S dto);
-
 }

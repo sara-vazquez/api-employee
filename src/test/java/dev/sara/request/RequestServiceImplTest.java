@@ -57,7 +57,6 @@ public class RequestServiceImplTest {
         assertThat(storedEntity.topic(), is(equalTo("Problemas")));
         assertThat(storedEntity.description(), is(equalTo("El sistema da problemas")));
         assertThat(storedEntity.status(), is(equalTo("Active")));
-
     }
 
 }
