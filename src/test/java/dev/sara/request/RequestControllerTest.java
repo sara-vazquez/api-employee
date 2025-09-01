@@ -97,7 +97,7 @@ public class RequestControllerTest {
 
         List<RequestDTOResponse> sortedRequests = List.of(request2, request1);
         String json = mapper.writeValueAsString(sortedRequests);
-        when(requestService.getEntities()).thenReturn(sortedRequests);
+        when(requestService.getEntitiesSortedByDate()).thenReturn(sortedRequests);
         MockHttpServletResponse response = mockMvc.perform(get("/api/v1/requests/sorted"))
                 .andExpect(status().isOk())
                 .andReturn()
