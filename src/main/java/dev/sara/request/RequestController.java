@@ -37,6 +37,11 @@ public class RequestController {
         return ResponseEntity.status(201).body(entityStored);
     }
 
+    @GetMapping("/sorted")
+    public List<RequestDTOResponse> getRequestsSortedByDate() {
+        return service.getEntitiesSortedByDate();
+    }
+
     @GetMapping("/{id}")
     public String show(@PathVariable("id") Long id) {
         return new String();
