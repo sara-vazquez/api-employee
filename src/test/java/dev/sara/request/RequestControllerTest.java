@@ -1,6 +1,7 @@
 package dev.sara.request;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -39,8 +40,8 @@ public class RequestControllerTest {
     @Test
     @DisplayName("Should return all requests")
     void textIndex_ShouldReturnRequests() throws Exception{
-        RequestDTOResponse request1 = new RequestDTOResponse(1L,"Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema", "Active");
-        RequestDTOResponse request2 = new RequestDTOResponse(2L,"Paco", LocalDate.of(2025, 9, 5), "Fallo", "Fallo del sistema", "Active");
+        RequestDTOResponse request1 = new RequestDTOResponse(1L,"Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema", "Active", LocalDateTime.of(2025, 8, 28, 12, 0));
+        RequestDTOResponse request2 = new RequestDTOResponse(2L,"Paco", LocalDate.of(2025, 9, 5), "Fallo", "Fallo del sistema", "Active", LocalDateTime.of(2025, 9, 5, 11, 0));
         List<RequestDTOResponse> requests = List.of(request1, request2);
         String json = mapper.writeValueAsString(requests);
 
@@ -58,7 +59,7 @@ public class RequestControllerTest {
     @Test
     void testStore_ShouldReturnStatus201() throws Exception {
         RequestDTORequest dto = new RequestDTORequest("Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema", "Active");
-        RequestDTOResponse Conchi = new RequestDTOResponse(1L,"Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema", "Active");
+        RequestDTOResponse Conchi = new RequestDTOResponse(1L,"Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema", "Active", LocalDateTime.of(2025, 8, 28, 12, 0));
         String json = mapper.writeValueAsString(dto);
 
         when(requestService.storeEntity(dto)).thenReturn(Conchi);

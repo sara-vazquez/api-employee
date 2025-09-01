@@ -1,13 +1,17 @@
 package dev.sara.request;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import dev.sara.builder.RequestEntityBuilder;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 
 @Entity
@@ -25,6 +29,10 @@ public class RequestEntity {
     private String topic;
     private String description;
     private String status;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private LocalDateTime createdAt;
 
     public RequestEntity(Long id, String name, LocalDate date, String topic, String description, String status ) {
         this.id = id;
@@ -81,6 +89,14 @@ public class RequestEntity {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+    
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     //nos devuelve el builder a través de un método estático

@@ -14,7 +14,7 @@ public class RequestMapper {
     }
 
     public static RequestDTOResponse toDTO(RequestEntity entity) {
-        RequestDTOResponse dtoResponse = new RequestDTOResponse(entity.getId(), entity.getName(), entity.getDate(), entity.getTopic(), entity.getDescription(), entity.getStatus());
+        RequestDTOResponse dtoResponse = new RequestDTOResponse(entity.getId(), entity.getName(), entity.getDate(), entity.getTopic(), entity.getDescription(), entity.getStatus(), entity.getCreatedAt());
         return dtoResponse;
     }
 }

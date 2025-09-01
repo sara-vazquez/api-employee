@@ -1,6 +1,7 @@
 package dev.sara.request;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -9,6 +10,7 @@ public record RequestDTOResponse( Long id,
     @JsonFormat(pattern = "dd-MM-yyyy")LocalDate date, 
     String topic, 
     String description,
-    String status
+    String status,
+    LocalDateTime createdAt
     ) {
 }
