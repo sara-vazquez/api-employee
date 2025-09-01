@@ -46,6 +46,12 @@ public class RequestEntityBuilder implements IRequestBuilder {
     }
 
     @Override
+    public RequestEntityBuilder status(String status) {
+        request.setStatus(status);
+        return this; 
+    }
+
+    @Override
     public RequestEntity build() {
         return this.request;
     }

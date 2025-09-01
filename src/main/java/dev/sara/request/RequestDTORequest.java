@@ -8,7 +8,8 @@ public record RequestDTORequest(
     String name, 
     @JsonFormat(pattern = "dd-MM-yyyy")LocalDate date, 
     String topic, 
-    String description
+    String description,
+    String status
     ) {
 
 }

@@ -24,13 +24,15 @@ public class RequestEntity {
     private LocalDate date;
     private String topic;
     private String description;
+    private String status;
 
-    public RequestEntity(Long id, String name, LocalDate date, String topic, String description ) {
+    public RequestEntity(Long id, String name, LocalDate date, String topic, String description, String status ) {
         this.id = id;
         this.name = name;
         this.date = date;
         this.topic = topic;
         this.description = description;
+        this.status = status;
     }
 
     public Long getId() {
@@ -71,6 +73,14 @@ public class RequestEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     //nos devuelve el builder a través de un método estático

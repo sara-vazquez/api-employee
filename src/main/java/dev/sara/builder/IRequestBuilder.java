@@ -10,6 +10,7 @@ public interface IRequestBuilder {
     public RequestEntityBuilder date(LocalDate date);
     public RequestEntityBuilder topic(String topic);
     public RequestEntityBuilder description(String description);
+    public RequestEntityBuilder status(String status);
 
     public RequestEntity build();
 }

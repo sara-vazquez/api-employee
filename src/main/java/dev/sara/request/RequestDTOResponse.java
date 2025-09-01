@@ -8,6 +8,7 @@ public record RequestDTOResponse( Long id,
     String name, 
     @JsonFormat(pattern = "dd-MM-yyyy")LocalDate date, 
     String topic, 
-    String description
+    String description,
+    String status
     ) {
 }
