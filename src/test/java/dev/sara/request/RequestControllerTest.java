@@ -40,8 +40,8 @@ public class RequestControllerTest {
     @Test
     @DisplayName("Should return all requests")
     void textIndex_ShouldReturnRequests() throws Exception{
-        RequestDTOResponse request1 = new RequestDTOResponse(1L,"Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema", "Active", LocalDateTime.of(2025, 8, 28, 12, 0));
-        RequestDTOResponse request2 = new RequestDTOResponse(2L,"Paco", LocalDate.of(2025, 9, 5), "Fallo", "Fallo del sistema", "Active", LocalDateTime.of(2025, 9, 5, 11, 0));
+        RequestDTOResponse request1 = new RequestDTOResponse(1L,"Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema", "Pendiente", LocalDateTime.of(2025, 8, 28, 12, 0));
+        RequestDTOResponse request2 = new RequestDTOResponse(2L,"Paco", LocalDate.of(2025, 9, 5), "Fallo", "Fallo del sistema", "Pendiente", LocalDateTime.of(2025, 9, 5, 11, 0));
         List<RequestDTOResponse> requests = List.of(request1, request2);
         String json = mapper.writeValueAsString(requests);
 
@@ -58,8 +58,8 @@ public class RequestControllerTest {
 
     @Test
     void testStore_ShouldReturnStatus201() throws Exception {
-        RequestDTORequest dto = new RequestDTORequest("Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema", "Active");
-        RequestDTOResponse Conchi = new RequestDTOResponse(1L,"Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema", "Active", LocalDateTime.of(2025, 8, 28, 12, 0));
+        RequestDTORequest dto = new RequestDTORequest("Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema", "Pendiente");
+        RequestDTOResponse Conchi = new RequestDTOResponse(1L,"Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema", "Pendiente", LocalDateTime.of(2025, 8, 28, 12, 0));
         String json = mapper.writeValueAsString(dto);
 
         when(requestService.storeEntity(dto)).thenReturn(Conchi);
@@ -73,7 +73,7 @@ public class RequestControllerTest {
 
     @Test
     void testStoreRequest_ShouldReturnStatus400_IfNameIsEmpty() throws Exception {
-        RequestDTORequest dto = new RequestDTORequest("", LocalDate.of(2025, 9, 5), "Fallo", "Fallo del sistema", "Active");
+        RequestDTORequest dto = new RequestDTORequest("", LocalDate.of(2025, 9, 5), "Fallo", "Fallo del sistema", "Pendiente");
         String json = mapper.writeValueAsString(dto);
         when(requestService.storeEntity(dto)).thenReturn(null);
         mockMvc.perform(post("/api/v1/requests").content(json).contentType("application/json"))
@@ -82,7 +82,7 @@ public class RequestControllerTest {
 
     @Test
     void testStoreCountry_ShouldReturnNoContent_IfServiceDoesNotReturnAnyValue() throws Exception {
-        RequestDTORequest dto = new RequestDTORequest("Paco", LocalDate.of(2025, 9, 5), "Fallo", "Fallo del sistema", "Active");
+        RequestDTORequest dto = new RequestDTORequest("Paco", LocalDate.of(2025, 9, 5), "Fallo", "Fallo del sistema", "Pendiente");
         String json = mapper.writeValueAsString(dto);
 
         when(requestService.storeEntity(dto)).thenReturn(null);
@@ -92,8 +92,8 @@ public class RequestControllerTest {
 
     @Test 
     void testGetSortedRequests_ReturnSortedList() throws Exception {
-        RequestDTOResponse request1 = new RequestDTOResponse(1L, "Conchi", LocalDate.of(2025, 9, 2), "Error", "Se me cae el sistema", "Active", LocalDateTime.of(2025, 8, 28, 12, 0));
-        RequestDTOResponse request2 = new RequestDTOResponse(2L, "Paco", LocalDate.of(2025, 9, 1), "Fallo", "Fallo del sistema", "Active", LocalDateTime.of(2025, 9, 2, 14, 0));
+        RequestDTOResponse request1 = new RequestDTOResponse(1L, "Conchi", LocalDate.of(2025, 9, 2), "Error", "Se me cae el sistema", "Pendiente", LocalDateTime.of(2025, 8, 28, 12, 0));
+        RequestDTOResponse request2 = new RequestDTOResponse(2L, "Paco", LocalDate.of(2025, 9, 1), "Fallo", "Fallo del sistema", "Pendiente", LocalDateTime.of(2025, 9, 2, 14, 0));
 
         List<RequestDTOResponse> sortedRequests = List.of(request2, request1);
         String json = mapper.writeValueAsString(sortedRequests);

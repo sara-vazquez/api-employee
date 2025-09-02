@@ -29,11 +29,9 @@ public class RequestController {
     @PostMapping("")
     public ResponseEntity<RequestDTOResponse> storeEntity(@RequestBody RequestDTORequest dtoRequest) {
         if (dtoRequest.name().isBlank()) return ResponseEntity.badRequest().build();
-
         RequestDTOResponse entityStored = service.storeEntity(dtoRequest);
 
         if (entityStored == null) return ResponseEntity.noContent().build();
-
         return ResponseEntity.status(201).body(entityStored);
     }
 
