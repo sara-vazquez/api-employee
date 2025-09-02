@@ -10,6 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -28,6 +30,9 @@ public class RequestEntity {
     private Long id;
     private String name;
     private LocalDate date;
+
+    @ManyToOne
+    @JoinColumn(name = "topic_id")
     private TopicEntity topic;
     private String description;
     private boolean attended;

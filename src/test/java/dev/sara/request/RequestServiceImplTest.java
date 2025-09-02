@@ -15,6 +15,8 @@ import org.mockito.Mockito;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import dev.sara.topics.TopicEntity;
+
 @ExtendWith(MockitoExtension.class)
 public class RequestServiceImplTest {
 
@@ -32,9 +34,10 @@ public class RequestServiceImplTest {
     @Test
     void testGetRequests_ShouldReturnAllRequests() {
 
+        TopicEntity topic = new TopicEntity("Bloqueo del sistema");
         List<RequestEntity> requestsMock = List.of(
-            new RequestEntity(1L,"Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema", false),
-            new RequestEntity(2L,"Paco", LocalDate.of(2025, 9, 5), "Fallo", "Fallo del sistema", false));
+            new RequestEntity(1L,"Conchi", LocalDate.of(2025, 8, 28), topic, "Se me cae el sistema", false),
+            new RequestEntity(2L,"Paco", LocalDate.of(2025, 9, 5), topic, "Fallo del sistema", false));
 
         when(repository.findAll()).thenReturn(requestsMock);
         List<RequestDTOResponse> request = requestService.getEntities();
@@ -46,7 +49,8 @@ public class RequestServiceImplTest {
 
     @Test
     void testStoreRequest_ShouldReturnRequestEntity() {
-        RequestDTORequest dto = new RequestDTORequest("Julia", LocalDate.of(2025, 8, 29), "Problemas", "El sistema da problemas", true);
+        TopicEntity topic = new TopicEntity("Bloqueo del sistema");
+        RequestDTORequest dto = new RequestDTORequest("Julia", LocalDate.of(2025, 8, 29), topic, "El sistema da problemas", true);
         when(repository.save(Mockito.any(RequestEntity.class))).thenReturn(new RequestEntity(3L, dto.name(),dto.date(),dto.topic(), dto.description(), dto.attended()));
 
         RequestDTOResponse storedEntity = requestService.storeEntity(dto);
@@ -54,7 +58,7 @@ public class RequestServiceImplTest {
         assertThat(storedEntity.id(), is(equalTo(3L)));
         assertThat(storedEntity.name(), is(equalTo("Julia")));
         assertThat(storedEntity.date(), is(equalTo(LocalDate.of(2025, 8, 29))));
-        assertThat(storedEntity.topic(), is(equalTo("Problemas")));
+        assertThat(storedEntity.topic().getName(), is(equalTo("Bloqueo del sistema")));
         assertThat(storedEntity.description(), is(equalTo("El sistema da problemas")));
         assertThat(storedEntity.attended(), is(equalTo(true)));
     }

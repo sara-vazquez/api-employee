@@ -3,6 +3,7 @@ package dev.sara.request;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -19,14 +20,9 @@ public class RequestServiceImpl implements IGenericService<RequestDTOResponse, R
 
     @Override
     public List<RequestDTOResponse> getEntities() {
-        List<RequestDTOResponse> requests = new ArrayList<>();
-
-        repository.findAll().forEach(r -> {
-            RequestDTOResponse request = RequestMapper.toDTO(r);
-            requests.add(request);
-        });
-
-        return requests;
+        return repository.findAll().stream()
+        .map(RequestMapper::toDTO)
+        .collect(Collectors.toList());
     }
 
     @Override
