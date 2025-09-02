@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import org.springframework.stereotype.Component;
 
 import dev.sara.request.RequestEntity;
+import dev.sara.topics.TopicEntity;
 
 @Component
 public class RequestEntityBuilder implements IRequestBuilder {
@@ -34,7 +35,7 @@ public class RequestEntityBuilder implements IRequestBuilder {
     }
 
     @Override
-    public RequestEntityBuilder topic(String topic) {
+    public RequestEntityBuilder topic(TopicEntity topic) {
         request.setTopic(topic);
         return this; 
     }

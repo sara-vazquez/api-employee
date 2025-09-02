@@ -20,7 +20,8 @@ public class TopicEntity {
     @Column(nullable = false, unique = true)
     private String name;
 
-    public TopicEntity() {
+    public TopicEntity(String name) {
+        this.name = name;
     }
 
     public TopicEntity(Long id, String name) {

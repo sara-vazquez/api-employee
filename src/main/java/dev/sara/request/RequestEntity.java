@@ -24,6 +24,7 @@ public class RequestEntity {
     
     @Id //define el campo 'id' como primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY) //genera el id automáticamente
+    @Column(name="id_request", nullable = false, unique= true)
     private Long id;
     private String name;
     private LocalDate date;
