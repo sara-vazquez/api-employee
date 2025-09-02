@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import dev.sara.exceptions.RequestNotFoundException;
 import dev.sara.implementations.IGenericService;
 
 @Service
