@@ -41,12 +41,11 @@ public class RequestServiceImpl implements IGenericService<RequestDTOResponse, R
                          .toList();
     }
 
-   /*  @Override
-    public List<RequestDTOResponse> getEntitiesSortedById() {
-        return repository.findAllById()
-                         .stream()
-                         .map(RequestMapper::toDTO)
-                         .toList();
-    } */
+   @Override
+    public RequestDTOResponse getEntityById(Long id) {
+        return repository.findById(id)
+                .map(RequestMapper::toDTO)
+                .orElseThrow(() -> new RequestNotFoundException("No se ha encontrado la solicitud. Id " + id + " no existe."));    
+        }
     
 }
