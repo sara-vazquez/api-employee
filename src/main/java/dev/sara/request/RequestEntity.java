@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import dev.sara.builder.RequestEntityBuilder;
+import dev.sara.topics.TopicEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ public class RequestEntity {
     private Long id;
     private String name;
     private LocalDate date;
-    private String topic;
+    private TopicEntity topic;
     private String description;
     private boolean attended;
 
@@ -34,7 +35,7 @@ public class RequestEntity {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
-    public RequestEntity(Long id, String name, LocalDate date, String topic, String description, boolean attended ) {
+    public RequestEntity(Long id, String name, LocalDate date, TopicEntity topic, String description, boolean attended ) {
         this.id = id;
         this.name = name;
         this.date = date;
@@ -67,11 +68,11 @@ public class RequestEntity {
         this.date = date;
     }
 
-    public String getTopic() {
+    public TopicEntity getTopic() {
         return topic;
     }
 
-    public void setTopic(String topic) {
+    public void setTopic(TopicEntity topic) {
         this.topic = topic;
     }
 

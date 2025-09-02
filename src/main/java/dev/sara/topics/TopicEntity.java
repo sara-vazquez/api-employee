@@ -1,5 +1,6 @@
 package dev.sara.topics;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,14 +13,21 @@ import jakarta.persistence.Table;
 @Table(name="topics")
 public class TopicEntity {
 
-    public TopicEntity() {
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
     
+    @Column(nullable = false, unique = true)
+    private String name;
+
+    public TopicEntity() {
+    }
+
+    public TopicEntity(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
@@ -32,8 +40,5 @@ public class TopicEntity {
     public void setName(String name) {
         this.name = name;
     }
-
-    
-
     
 }
