@@ -10,7 +10,7 @@ public record RequestDTOResponse( Long id,
     @JsonFormat(pattern = "dd-MM-yyyy")LocalDate date, 
     String topic, 
     String description,
-    String status,
+    boolean attended,
     LocalDateTime createdAt
     ) {
 }

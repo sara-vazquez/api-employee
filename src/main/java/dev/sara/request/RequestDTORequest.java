@@ -9,7 +9,7 @@ public record RequestDTORequest(
     @JsonFormat(pattern = "dd-MM-yyyy")LocalDate date, 
     String topic, 
     String description,
-    String status
+    boolean attended
     ) {
 
 }

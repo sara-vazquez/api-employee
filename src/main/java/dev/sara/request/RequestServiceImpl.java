@@ -45,5 +45,13 @@ public class RequestServiceImpl implements IGenericService<RequestDTOResponse, R
                          .map(RequestMapper::toDTO)
                          .toList();
     }
+
+   /*  @Override
+    public List<RequestDTOResponse> getEntitiesSortedById() {
+        return repository.findAllById()
+                         .stream()
+                         .map(RequestMapper::toDTO)
+                         .toList();
+    } */
     
 }

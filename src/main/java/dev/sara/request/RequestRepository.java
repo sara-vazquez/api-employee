@@ -8,4 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RequestRepository extends JpaRepository<RequestEntity, Long> {
     List<RequestEntity> findAllByOrderByCreatedAtAsc();
+
+    /*List<RequestEntity> findAllById();*/
+
 }

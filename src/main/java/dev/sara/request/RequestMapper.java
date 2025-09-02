@@ -8,13 +8,13 @@ public class RequestMapper {
         request.setDate(dtoRequest.date());
         request.setTopic(dtoRequest.topic());
         request.setDescription(dtoRequest.description());
-        request.setStatus(dtoRequest.status());
+        request.setAttended(dtoRequest.attended());
 
         return request;
     }
 
     public static RequestDTOResponse toDTO(RequestEntity entity) {
-        RequestDTOResponse dtoResponse = new RequestDTOResponse(entity.getId(), entity.getName(), entity.getDate(), entity.getTopic(), entity.getDescription(), entity.getStatus(), entity.getCreatedAt());
+        RequestDTOResponse dtoResponse = new RequestDTOResponse(entity.getId(), entity.getName(), entity.getDate(), entity.getTopic(), entity.getDescription(), entity.isAttended(), entity.getCreatedAt());
         return dtoResponse;
     }
 }

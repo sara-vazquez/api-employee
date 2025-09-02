@@ -28,19 +28,19 @@ public class RequestEntity {
     private LocalDate date;
     private String topic;
     private String description;
-    private String status;
+    private boolean attended;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
-    public RequestEntity(Long id, String name, LocalDate date, String topic, String description, String status ) {
+    public RequestEntity(Long id, String name, LocalDate date, String topic, String description, boolean attended ) {
         this.id = id;
         this.name = name;
         this.date = date;
         this.topic = topic;
         this.description = description;
-        this.status = status;
+        this.attended = attended;
     }
 
     public Long getId() {
@@ -83,12 +83,12 @@ public class RequestEntity {
         this.description = description;
     }
 
-    public String getStatus() {
-        return status;
+    public boolean isAttended() {
+        return attended;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setAttended(boolean attended) {
+        this.attended = attended;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -103,4 +103,6 @@ public class RequestEntity {
     public static RequestEntityBuilder builder() {
         return new RequestEntityBuilder();
     }
+
+    
 }

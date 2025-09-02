@@ -9,4 +9,6 @@ public interface IGenericService<T, S> {
     public T storeEntity(S dto);
 
     public List<T> getEntitiesSortedByDate();
+
+    /*public Optional <T> getEntitiesById();*/
 }

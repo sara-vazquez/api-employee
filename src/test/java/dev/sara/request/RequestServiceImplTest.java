@@ -33,8 +33,8 @@ public class RequestServiceImplTest {
     void testGetRequests_ShouldReturnAllRequests() {
 
         List<RequestEntity> requestsMock = List.of(
-            new RequestEntity(1L,"Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema", "Pendiente"),
-            new RequestEntity(2L,"Paco", LocalDate.of(2025, 9, 5), "Fallo", "Fallo del sistema", "Pendiente"));
+            new RequestEntity(1L,"Conchi", LocalDate.of(2025, 8, 28), "Error", "Se me cae el sistema", false),
+            new RequestEntity(2L,"Paco", LocalDate.of(2025, 9, 5), "Fallo", "Fallo del sistema", false));
 
         when(repository.findAll()).thenReturn(requestsMock);
         List<RequestDTOResponse> request = requestService.getEntities();
@@ -46,8 +46,8 @@ public class RequestServiceImplTest {
 
     @Test
     void testStoreRequest_ShouldReturnRequestEntity() {
-        RequestDTORequest dto = new RequestDTORequest("Julia", LocalDate.of(2025, 8, 29), "Problemas", "El sistema da problemas", "Atendida");
-        when(repository.save(Mockito.any(RequestEntity.class))).thenReturn(new RequestEntity(3L, dto.name(),dto.date(),dto.topic(), dto.description(), dto.status()));
+        RequestDTORequest dto = new RequestDTORequest("Julia", LocalDate.of(2025, 8, 29), "Problemas", "El sistema da problemas", true);
+        when(repository.save(Mockito.any(RequestEntity.class))).thenReturn(new RequestEntity(3L, dto.name(),dto.date(),dto.topic(), dto.description(), dto.attended()));
 
         RequestDTOResponse storedEntity = requestService.storeEntity(dto);
 
@@ -56,7 +56,7 @@ public class RequestServiceImplTest {
         assertThat(storedEntity.date(), is(equalTo(LocalDate.of(2025, 8, 29))));
         assertThat(storedEntity.topic(), is(equalTo("Problemas")));
         assertThat(storedEntity.description(), is(equalTo("El sistema da problemas")));
-        assertThat(storedEntity.status(), is(equalTo("Atendida")));
+        assertThat(storedEntity.attended(), is(equalTo(true)));
     }
 
 }

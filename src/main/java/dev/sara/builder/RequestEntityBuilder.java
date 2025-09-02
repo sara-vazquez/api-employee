@@ -46,8 +46,8 @@ public class RequestEntityBuilder implements IRequestBuilder {
     }
 
     @Override
-    public RequestEntityBuilder status(String status) {
-        request.setStatus(status);
+    public RequestEntityBuilder attended(boolean attended) {
+        request.setAttended(attended);
         return this; 
     }
 

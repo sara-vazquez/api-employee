@@ -13,10 +13,10 @@ public class RequestEntityTest {
     
     @Test
     void testRequestEntity_Initialization() {
-        RequestEntity request = new RequestEntity(1L, "Sara",LocalDate.of(2025, 8, 28), "Spring", "No voy a llorar", "Pendiente");
+        RequestEntity request = new RequestEntity(1L, "Sara",LocalDate.of(2025, 8, 28), "Spring", "No voy a llorar", false);
 
         assertThat(request, is(instanceOf(RequestEntity.class)));
-        assertThat(request.getClass().getDeclaredFields().length, is(equalTo(6)));
+        assertThat(request.getClass().getDeclaredFields().length, is(equalTo(7)));
     }
 
     @Test
@@ -27,14 +27,14 @@ public class RequestEntityTest {
         request.setDate(LocalDate.of(2025, 8, 28));
         request.setTopic("Spring");
         request.setDescription("No voy a llorar");
-        request.setStatus("Pendiente");
+        request.setAttended(false);
         
         assertThat(request.getId(), is(equalTo(1L)));
         assertThat(request.getName(), is(equalTo("Sara")));
         assertThat(request.getDate(), is(equalTo(LocalDate.of(2025, 8, 28))));
         assertThat(request.getTopic(), is(equalTo("Spring")));
         assertThat(request.getDescription(), equalTo("No voy a llorar"));
-        assertThat(request.getStatus(), equalTo("Pendiente"));
+        assertThat(request.isAttended(), equalTo(false));
     }
 
     @Test
@@ -45,7 +45,7 @@ public class RequestEntityTest {
         .date(LocalDate.of(2025, 8, 28))
         .topic("Error")
         .description("Error en el sistema")
-        .status("Atendida")
+        .attended(true)
         .build();
 
         assertThat(request, is(instanceOf(RequestEntity.class)));
@@ -54,7 +54,7 @@ public class RequestEntityTest {
         assertThat(request.getDate(), is(equalTo(LocalDate.of(2025, 8, 28))));
         assertThat(request.getTopic(), is(equalTo("Error")));
         assertThat(request.getDescription(), is(equalTo("Error en el sistema")));
-        assertThat(request.getStatus(), equalTo("Atendida"));
+        assertThat(request.isAttended(), equalTo(true));
 
     }
 }
