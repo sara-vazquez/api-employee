@@ -24,7 +24,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import dev.sara.implementations.IGenericService;
-import dev.sara.topics.TopicEntity;
 
 
 @WebMvcTest(controllers = RequestController.class)
@@ -42,9 +41,8 @@ public class RequestControllerTest {
     @Test
     @DisplayName("Should return all requests")
     void textIndex_ShouldReturnRequests() throws Exception{
-        TopicEntity topic = new TopicEntity("Bloqueo del sistema");
-        RequestDTOResponse request1 = new RequestDTOResponse(1L,"Conchi", LocalDate.of(2025, 8, 28), topic, "Se me cae el sistema", false, LocalDateTime.of(2025, 8, 28, 12, 0));
-        RequestDTOResponse request2 = new RequestDTOResponse(2L,"Paco", LocalDate.of(2025, 9, 5), topic, "Fallo del sistema", false, LocalDateTime.of(2025, 9, 5, 11, 0));
+        RequestDTOResponse request1 = new RequestDTOResponse(1L,"Conchi", LocalDate.of(2025, 8, 28), 1L, "Se me cae el sistema", false, LocalDateTime.of(2025, 8, 28, 12, 0));
+        RequestDTOResponse request2 = new RequestDTOResponse(2L,"Paco", LocalDate.of(2025, 9, 5), 2L, "Fallo del sistema", false, LocalDateTime.of(2025, 9, 5, 11, 0));
         List<RequestDTOResponse> requests = List.of(request1, request2);
         String json = mapper.writeValueAsString(requests);
 
@@ -61,9 +59,8 @@ public class RequestControllerTest {
 
     @Test
     void testStore_ShouldReturnStatus201() throws Exception {
-        TopicEntity topic = new TopicEntity("Error de usuario");
-        RequestDTORequest dto = new RequestDTORequest("Conchi", LocalDate.of(2025, 8, 28), topic, "Se me cae el sistema", false);
-        RequestDTOResponse dtoResponse = new RequestDTOResponse(1L,"Conchi", LocalDate.of(2025, 8, 28), topic, "Se me cae el sistema", false, LocalDateTime.of(2025, 8, 28, 12, 0));
+        RequestDTORequest dto = new RequestDTORequest("Conchi", LocalDate.of(2025, 8, 28), 3L, "Se me cae el sistema", false);
+        RequestDTOResponse dtoResponse = new RequestDTOResponse(1L,"Conchi", LocalDate.of(2025, 8, 28), 3L, "Se me cae el sistema", false, LocalDateTime.of(2025, 8, 28, 12, 0));
         String json = mapper.writeValueAsString(dto);
 
         when(requestService.storeEntity(any(RequestDTORequest.class))).thenReturn(dtoResponse);
@@ -77,8 +74,7 @@ public class RequestControllerTest {
 
     @Test
     void testStoreRequest_ShouldReturnStatus400_IfNameIsEmpty() throws Exception {
-        TopicEntity topic = new TopicEntity("Error de usuario");
-        RequestDTORequest dto = new RequestDTORequest("", LocalDate.of(2025, 9, 5), topic, "Fallo del sistema", false);
+        RequestDTORequest dto = new RequestDTORequest("", LocalDate.of(2025, 9, 5), 3L, "Fallo del sistema", false);
         String json = mapper.writeValueAsString(dto);
         when(requestService.storeEntity(dto)).thenReturn(null);
         mockMvc.perform(post("/api/v1/requests").content(json).contentType("application/json"))
@@ -87,8 +83,7 @@ public class RequestControllerTest {
 
     @Test
     void testStoreRequest_ShouldReturnNoContent_IfServiceDoesNotReturnAnyValue() throws Exception {
-        TopicEntity topic = new TopicEntity("Error de SPU");
-        RequestDTORequest dto = new RequestDTORequest("Paco", LocalDate.of(2025, 9, 5),topic, "Fallo del sistema", false);
+        RequestDTORequest dto = new RequestDTORequest("Paco", LocalDate.of(2025, 9, 5),4L, "Fallo del sistema", false);
         String json = mapper.writeValueAsString(dto);
 
         when(requestService.storeEntity(dto)).thenReturn(null);
@@ -98,14 +93,13 @@ public class RequestControllerTest {
 
     @Test 
     void testGetSortedRequests_ReturnSortedList() throws Exception {
-        TopicEntity topic = new TopicEntity("Error de SPU");
-        RequestDTOResponse request1 = new RequestDTOResponse(1L, "Conchi", LocalDate.of(2025, 9, 2), topic, "Se me cae el sistema", false, LocalDateTime.of(2025, 8, 28, 12, 0));
-        RequestDTOResponse request2 = new RequestDTOResponse(2L, "Paco", LocalDate.of(2025, 9, 1), topic, "Fallo del sistema", false, LocalDateTime.of(2025, 9, 2, 14, 0));
+        RequestDTOResponse request1 = new RequestDTOResponse(1L, "Conchi", LocalDate.of(2025, 9, 2), 2L, "Se me cae el sistema", false, LocalDateTime.of(2025, 8, 28, 12, 0));
+        RequestDTOResponse request2 = new RequestDTOResponse(2L, "Paco", LocalDate.of(2025, 9, 1), 4L, "Fallo del sistema", false, LocalDateTime.of(2025, 9, 2, 14, 0));
 
         List<RequestDTOResponse> sortedRequests = List.of(request2, request1);
         String json = mapper.writeValueAsString(sortedRequests);
         when(requestService.getEntitiesSortedByDate()).thenReturn(sortedRequests);
-        MockHttpServletResponse response = mockMvc.perform(get("/api/v1/requests/sorted"))
+        MockHttpServletResponse response = mockMvc.perform(get("/api/v1/requests/date"))
                 .andExpect(status().isOk())
                 .andReturn()
                 .getResponse();

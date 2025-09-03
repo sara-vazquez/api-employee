@@ -35,7 +35,7 @@ public class RequestController {
         return ResponseEntity.status(201).body(entityStored);
     }
 
-    @GetMapping("/sorted")
+    @GetMapping("/date")
     public List<RequestDTOResponse> getRequestsSortedByDate() {
         return service.getEntitiesSortedByDate();
     }
