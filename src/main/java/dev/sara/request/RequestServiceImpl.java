@@ -7,15 +7,20 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import dev.sara.exceptions.RequestNotFoundException;
+import dev.sara.exceptions.TopicNotFoundException;
 import dev.sara.implementations.IGenericService;
+import dev.sara.topics.TopicEntity;
+import dev.sara.topics.TopicRepository;
 
 @Service
 public class RequestServiceImpl implements IGenericService<RequestDTOResponse, RequestDTORequest> {
 
     private final RequestRepository repository;
+    private final TopicRepository topicRepository;
 
-    public RequestServiceImpl(RequestRepository repository) {
+    public RequestServiceImpl(RequestRepository repository, TopicRepository topicRepository) {
         this.repository = repository;
+        this.topicRepository = topicRepository;
     }
 
     @Override
@@ -27,7 +32,10 @@ public class RequestServiceImpl implements IGenericService<RequestDTOResponse, R
 
     @Override
     public RequestDTOResponse storeEntity(RequestDTORequest requestDTORequest) {
-        RequestEntity request = RequestMapper.toEntity(requestDTORequest);
+        TopicEntity topic = topicRepository.findById(requestDTORequest.topicId())
+        .orElseThrow(() -> new TopicNotFoundException("Tema no encontrado"));
+
+        RequestEntity request = RequestMapper.toEntity(requestDTORequest, topic);
         request.setCreatedAt(LocalDateTime.now());
 
         RequestEntity requestStored = repository.save(request);

@@ -1,12 +1,14 @@
 package dev.sara.request;
 
+import dev.sara.topics.TopicEntity;
+
 public class RequestMapper {
    
-    public static RequestEntity toEntity(RequestDTORequest dtoRequest) {
+    public static RequestEntity toEntity(RequestDTORequest dtoRequest, TopicEntity topic) {
         RequestEntity request = new RequestEntity();
         request.setName(dtoRequest.name());
         request.setDate(dtoRequest.date());
-        request.setTopic(dtoRequest.topic());
+        request.setTopic(topic);
         request.setDescription(dtoRequest.description());
         request.setAttended(dtoRequest.attended());
 
