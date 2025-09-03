@@ -10,10 +10,21 @@ public class TopicEntityTest {
     
     @Test
     void testTopicEntity_Initialization() {
-        TopicEntity topic = new TopicEntity(3L, "Error de usuario");
+        TopicEntity topic = new TopicEntity(4L, "Error de usuario");
 
         assertThat(topic, is(instanceOf(TopicEntity.class)));
         assertThat(topic.getClass().getDeclaredFields().length, is(equalTo(2)));
         assertThat(topic.getName(), is(equalTo("Error de usuario")));
+    }
+
+    @Test
+    void testTopicEntity() {
+        TopicEntity topic = new TopicEntity();
+
+        topic.setId(3L);
+        topic.setName("Bloqueo del sistema");
+
+        assertThat(topic.getId(), is(equalTo(3L)));
+        assertThat(topic.getName(), is(equalTo("Bloqueo del sistema")));
     }
 }
