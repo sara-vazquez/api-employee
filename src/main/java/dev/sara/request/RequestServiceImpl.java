@@ -55,6 +55,25 @@ public class RequestServiceImpl implements IGenericService<RequestDTOResponse, R
         return repository.findById(id)
                 .map(RequestMapper::toDTO)
                 .orElseThrow(() -> new RequestNotFoundException("No se ha encontrado la solicitud con id: " + id ));    
-        }
+    }
+
+    public RequestDTOResponse updateEntity(Long id, RequestDTORequest dto) {
+        RequestEntity existing = repository.findById(id)
+        .orElseThrow(() -> new RequestNotFoundException("No se ha encontrado la solicitud con id: " + id));
+
+        existing.setName(dto.name());
+        existing.setDate(dto.date());
+        existing.setDescription(dto.description());
+        existing.setAttended(dto.attended());
+        existing.setUpdatedAt(LocalDateTime.now());
+
+
+        TopicEntity topic = topicRepository.findById(dto.topicId())
+        .orElseThrow(() -> new TopicNotFoundException("Tema no encontrado"));
+        existing.setTopic(topic);
+
+        return RequestMapper.toDTO(repository.save(existing));
+
+    }
     
 }

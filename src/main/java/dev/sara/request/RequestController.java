@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,9 +17,11 @@ import dev.sara.implementations.IGenericService;
 @RequestMapping(path = "${api-endpoint}/requests")
 public class RequestController {
     private final IGenericService<RequestDTOResponse, RequestDTORequest> service;
+    private final RequestServiceImpl requestService;
 
-    public RequestController(IGenericService<RequestDTOResponse, RequestDTORequest> service) {
+    public RequestController(IGenericService<RequestDTOResponse, RequestDTORequest> service, RequestServiceImpl requestService) {
         this.service = service;
+        this.requestService = requestService;
     }
       
     @GetMapping("")
@@ -45,4 +48,15 @@ public class RequestController {
         RequestDTOResponse response = service.getEntityById(id);
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RequestDTOResponse> updatRequest(@PathVariable Long id, @RequestBody RequestDTORequest dtoRequest) {
+        if (dtoRequest.name() == null || dtoRequest.name().isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+       
+        RequestDTOResponse updatedRequest = requestService.updateEntity(id, dtoRequest);
+        return ResponseEntity.ok(updatedRequest);
+    }
+
 }

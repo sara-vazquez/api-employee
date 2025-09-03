@@ -28,18 +28,26 @@ public class RequestEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY) //genera el id automáticamente
     @Column(name="id_request", nullable = false, unique= true)
     private Long id;
+    
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false)
     private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "topic_id")
     private TopicEntity topic;
+
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
     private boolean attended;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt; 
 
     public RequestEntity(Long id, String name, LocalDate date, TopicEntity topic, String description, boolean attended ) {
         this.id = id;
@@ -104,6 +112,14 @@ public class RequestEntity {
     
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() { 
+        return updatedAt; 
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) { 
+        this.updatedAt = updatedAt; 
     }
 
     //nos devuelve el builder a través de un método estático

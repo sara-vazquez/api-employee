@@ -11,6 +11,7 @@ public record RequestDTOResponse( Long id,
     Long topicId, 
     String description,
     boolean attended,
-    LocalDateTime createdAt
+    LocalDateTime createdAt,
+    LocalDateTime updatedAt
     ) {
 }

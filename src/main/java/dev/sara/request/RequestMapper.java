@@ -23,7 +23,8 @@ public class RequestMapper {
             entity.getTopic().getId(),
             entity.getDescription(),
             entity.isAttended(),
-            entity.getCreatedAt()
+            entity.getCreatedAt(),
+            entity.getUpdatedAt()
         );
     }    
 }
