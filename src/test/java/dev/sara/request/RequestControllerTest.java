@@ -10,6 +10,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -62,16 +63,16 @@ public class RequestControllerTest {
     void testStore_ShouldReturnStatus201() throws Exception {
         TopicEntity topic = new TopicEntity("Error de usuario");
         RequestDTORequest dto = new RequestDTORequest("Conchi", LocalDate.of(2025, 8, 28), topic, "Se me cae el sistema", false);
-        RequestDTOResponse Conchi = new RequestDTOResponse(1L,"Conchi", LocalDate.of(2025, 8, 28), topic, "Se me cae el sistema", false, LocalDateTime.of(2025, 8, 28, 12, 0));
+        RequestDTOResponse dtoResponse = new RequestDTOResponse(1L,"Conchi", LocalDate.of(2025, 8, 28), topic, "Se me cae el sistema", false, LocalDateTime.of(2025, 8, 28, 12, 0));
         String json = mapper.writeValueAsString(dto);
 
-        when(requestService.storeEntity(dto)).thenReturn(Conchi);
+        when(requestService.storeEntity(any(RequestDTORequest.class))).thenReturn(dtoResponse);
         MockHttpServletResponse response = mockMvc.perform(post("/api/v1/requests").content(json).contentType("application/json"))
          .andExpect(status().isCreated())
          .andReturn()
          .getResponse();
 
-        assertThat(response.getContentAsString(), containsString(Conchi.name()));
+        assertThat(response.getContentAsString(), containsString(dtoResponse.name()));
     }
 
     @Test

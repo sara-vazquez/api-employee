@@ -31,7 +31,7 @@ public class RequestController {
         if (dtoRequest.name().isBlank()) return ResponseEntity.badRequest().build();
         RequestDTOResponse entityStored = service.storeEntity(dtoRequest);
 
-        if (entityStored == null) return ResponseEntity.noContent().build();
+       if (entityStored == null) return ResponseEntity.noContent().build();
         return ResponseEntity.status(201).body(entityStored);
     }
 
