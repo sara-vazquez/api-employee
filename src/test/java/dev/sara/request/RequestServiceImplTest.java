@@ -2,11 +2,11 @@ package dev.sara.request;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,6 +16,8 @@ import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import dev.sara.topics.TopicEntity;
+import dev.sara.topics.TopicRepository;
+
 
 @ExtendWith(MockitoExtension.class)
 public class RequestServiceImplTest {
@@ -26,15 +28,12 @@ public class RequestServiceImplTest {
     @Mock
     private RequestRepository repository;
 
-    @BeforeEach
-    void setUp() {
-        requestService = new RequestServiceImpl(repository);
-    }
+    @Mock
+    private TopicRepository topicRepository;
     
     @Test
     void testGetRequests_ShouldReturnAllRequests() {
-
-        TopicEntity topic = new TopicEntity("Bloqueo del sistema");
+        TopicEntity topic = new TopicEntity(2L, "Bloqueo del sistema");
         List<RequestEntity> requestsMock = List.of(
             new RequestEntity(1L,"Conchi", LocalDate.of(2025, 8, 28), topic, "Se me cae el sistema", false),
             new RequestEntity(2L,"Paco", LocalDate.of(2025, 9, 5), topic, "Fallo del sistema", false));
@@ -49,18 +48,22 @@ public class RequestServiceImplTest {
 
     @Test
     void testStoreRequest_ShouldReturnRequestEntity() {
-        TopicEntity topic = new TopicEntity("Bloqueo del sistema");
-        RequestDTORequest dto = new RequestDTORequest("Julia", LocalDate.of(2025, 8, 29), topic, "El sistema da problemas", true);
-        when(repository.save(Mockito.any(RequestEntity.class))).thenReturn(new RequestEntity(3L, dto.name(),dto.date(),dto.topic(), dto.description(), dto.attended()));
+    TopicEntity topic = new TopicEntity(2L, "Bloqueo del sistema");
+    RequestDTORequest dto = new RequestDTORequest("Julia", LocalDate.of(2025, 8, 29), 2L, "El sistema da problemas", true);
+    
+    when(topicRepository.findById(2L)).thenReturn(Optional.of(topic));
+        
+    RequestEntity savedEntity = new RequestEntity(3L, "Julia", LocalDate.of(2025, 8, 29), topic, "El sistema da problemas", true);
+    when(repository.save(Mockito.any(RequestEntity.class))).thenReturn(savedEntity);
 
-        RequestDTOResponse storedEntity = requestService.storeEntity(dto);
+    RequestDTOResponse storedEntity = requestService.storeEntity(dto);
 
-        assertThat(storedEntity.id(), is(equalTo(3L)));
-        assertThat(storedEntity.name(), is(equalTo("Julia")));
-        assertThat(storedEntity.date(), is(equalTo(LocalDate.of(2025, 8, 29))));
-        assertThat(storedEntity.topic().getName(), is(equalTo("Bloqueo del sistema")));
-        assertThat(storedEntity.description(), is(equalTo("El sistema da problemas")));
-        assertThat(storedEntity.attended(), is(equalTo(true)));
+    assertThat(storedEntity.id(), is(equalTo(3L)));
+    assertThat(storedEntity.name(), is(equalTo("Julia")));
+    assertThat(storedEntity.date(), is(equalTo(LocalDate.of(2025, 8, 29))));
+    assertThat(storedEntity.topicId(), is(equalTo(2L)));
+    assertThat(storedEntity.description(), is(equalTo("El sistema da problemas")));
+    assertThat(storedEntity.attended(), is(equalTo(true)));
     }
 
 }
