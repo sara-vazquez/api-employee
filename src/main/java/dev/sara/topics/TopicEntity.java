@@ -15,10 +15,13 @@ public class TopicEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_topic", unique= true)
     private Long id;
     
     @Column(nullable = false, unique = true)
     private String name;
+
+    public TopicEntity() {}
 
     public TopicEntity(String name) {
         this.name = name;
