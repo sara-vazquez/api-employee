@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import dev.sara.builder.RequestEntityBuilder;
+import dev.sara.technician.TechnicianEntity;
 import dev.sara.topics.TopicEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,6 +47,12 @@ public class RequestEntity {
     @Column(name = "created_at", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
+
+    @ManyToOne
+    @JoinColumn(name = "technician_id")
+    private TechnicianEntity technician;
+
+    private LocalDateTime attendedAt;
 
     private LocalDateTime updatedAt; 
 
@@ -120,6 +127,22 @@ public class RequestEntity {
 
     public void setUpdatedAt(LocalDateTime updatedAt) { 
         this.updatedAt = updatedAt; 
+    }
+
+    public TechnicianEntity getTechnician() {
+        return technician;
+    }
+
+    public void setTechnician(TechnicianEntity technician) {
+        this.technician = technician;
+    }
+
+    public LocalDateTime getAttendedAt() {
+        return attendedAt;
+    }
+
+    public void setAttendedAt(LocalDateTime attendedAt) {
+        this.attendedAt = attendedAt;
     }
 
     //nos devuelve el builder a través de un método estático
