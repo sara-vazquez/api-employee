@@ -23,12 +23,12 @@ public class TechnicianEntityTest {
 
    @Test
     void testTechnicianEntity() {
-        TechnicianEntity topic = new TechnicianEntity();
+        TechnicianEntity technician = new TechnicianEntity();
 
-        topic.setId(1L);
-        topic.setTechnicianName("Michael Scott");
+        technician.setId(1L);
+        technician.setTechnicianName("Michael Scott");
 
-        assertThat(topic.getId(), is(equalTo(1L)));
-        assertThat(topic.getTechnicianName(), is(equalTo("Michael Scott")));
+        assertThat(technician.getId(), is(equalTo(1L)));
+        assertThat(technician.getTechnicianName(), is(equalTo("Michael Scott")));
     } 
 }

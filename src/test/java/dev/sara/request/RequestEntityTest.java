@@ -19,7 +19,7 @@ public class RequestEntityTest {
         RequestEntity request = new RequestEntity(1L, "Sara",LocalDate.of(2025, 8, 28), topic, "No voy a llorar", false);
 
         assertThat(request, is(instanceOf(RequestEntity.class)));
-        assertThat(request.getClass().getDeclaredFields().length, is(equalTo(8)));
+        assertThat(request.getClass().getDeclaredFields().length, is(equalTo(9)));
         assertThat(request.getTopic().getName(), is(equalTo("Error de entorno")));
 
     }
