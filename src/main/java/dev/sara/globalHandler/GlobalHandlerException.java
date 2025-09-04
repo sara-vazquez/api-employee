@@ -15,8 +15,8 @@ public class GlobalHandlerException {
     }
 
     @ExceptionHandler(IllegalStateException.class)
-    public ResponseEntity<String> handleConflict(IllegalStateException ex) {
-        return ResponseEntity.status(409).body(ex.getMessage());
+    public ResponseEntity<String> handleConflict(IllegalStateException exception) {
+        return ResponseEntity.status(409).body(exception.getMessage());
     }
     
 }
