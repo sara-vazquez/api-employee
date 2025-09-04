@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -30,7 +31,7 @@ public class AttendanceEntity {
     @JoinColumn(name = "request_id", nullable = false, unique = true)
     private RequestEntity request;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "technician_id", nullable = false, unique = true)
     private TechnicianEntity technician;
 
