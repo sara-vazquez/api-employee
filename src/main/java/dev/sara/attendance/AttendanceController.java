@@ -31,6 +31,4 @@ public class AttendanceController {
         }
         return ResponseEntity.status(201).body(response);
     }
-    
-   
 }
