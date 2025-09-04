@@ -13,18 +13,23 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import dev.sara.exceptions.RequestNotFoundException;
 
 
 @WebMvcTest(controllers = RequestController.class)
@@ -112,6 +117,36 @@ public class RequestControllerTest {
         RequestDTOResponse actualResponse = mapper.readValue(response.getContentAsString(), RequestDTOResponse.class);
         
         assertThat(actualResponse).isEqualTo(expectedResponse);
+    }
+
+    @Test
+    void testDeleteRequest_Attended_ShouldReturn204() throws Exception {
+        Long requestId = 1L;
+
+        mockMvc.perform(delete("/api/v1/requests/{id}", requestId))
+               .andExpect(status().isNoContent());
+    }
+
+    @Test
+    void testDeleteRequest_Pending_ShouldReturn409() throws Exception {
+        Long requestId = 5L;
+
+        doThrow(new IllegalStateException("No se puede eliminar una solicitud pendiente"))
+            .when(requestService).deleteRequest(requestId);
+
+        mockMvc.perform(delete("/api/v1/requests/{id}", requestId))
+               .andExpect(status().isConflict());
+    }
+
+    @Test
+    void testDeleteRequest_NotFound_ShouldReturn404() throws Exception {
+        Long requestId = 3L;
+
+        doThrow(new RequestNotFoundException("Solicitud no encontrada"))
+            .when(requestService).deleteRequest(requestId);
+
+        mockMvc.perform(delete("/api/v1/requests/{id}", requestId))
+               .andExpect(status().isNotFound());
     }
     
 
