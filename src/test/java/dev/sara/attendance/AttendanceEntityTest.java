@@ -19,7 +19,7 @@ public class AttendanceEntityTest {
        LocalDateTime now = LocalDateTime.now();
 
         RequestEntity request = new RequestEntity();
-        TechnicianEntity technician = new TechnicianEntity("Dwight Schrute");
+        TechnicianEntity technician = new TechnicianEntity(2L, "Dwight Schrute");
 
         AttendanceEntity attendance = new AttendanceEntity();
         attendance.setAttendedAt(now);
@@ -37,15 +37,15 @@ public class AttendanceEntityTest {
     void testAttendanceEntity() {
         LocalDateTime now = LocalDateTime.now();
         RequestEntity request = new RequestEntity();
-        TechnicianEntity technician = new TechnicianEntity("Dwight Schrute");
+        TechnicianEntity technician = new TechnicianEntity(2L, "Dwight Schrute");
 
         AttendanceEntity attendance = new AttendanceEntity();
-        attendance.setId(1L);
+        attendance.setId(2L);
         attendance.setAttendedAt(now);
         attendance.setRequest(request);
         attendance.setTechnician(technician);
 
-        assertThat(attendance.getId(), is(equalTo(1L)));
+        assertThat(attendance.getId(), is(equalTo(2L)));
         assertThat(attendance.getAttendedAt(), is(equalTo(now)));
         assertThat(attendance.getRequest(), is(equalTo(request)));
         assertThat(attendance.getTechnician(), is(equalTo(technician)));

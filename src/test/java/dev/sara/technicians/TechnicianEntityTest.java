@@ -14,7 +14,7 @@ public class TechnicianEntityTest {
     
     @Test
     void testTechnicianEntity_Initialization() {
-        TechnicianEntity technician = new TechnicianEntity("Michael Scott");
+        TechnicianEntity technician = new TechnicianEntity(1L, "Michael Scott");
 
         assertThat(technician, is(instanceOf(TechnicianEntity.class)));
         assertThat(technician.getClass().getDeclaredFields().length, is(equalTo(3)));

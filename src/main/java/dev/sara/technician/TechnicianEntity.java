@@ -26,7 +26,8 @@ public class TechnicianEntity {
     private AttendanceEntity attendance;
 
 
-    public TechnicianEntity(String technicianName) {
+    public TechnicianEntity(Long id, String technicianName) {
+        this.id = id;
         this.technicianName = technicianName;
     }
 
