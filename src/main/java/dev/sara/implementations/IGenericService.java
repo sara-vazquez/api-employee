@@ -8,8 +8,6 @@ public interface IGenericService<T, S> {
 
     public T storeEntity(S dto);
 
-    public List<T> getEntitiesSortedByDate();
-
     public T getEntityById(Long id);
 
     public T updateEntity(Long id, S dto);

@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import dev.sara.implementations.IGenericService;
+import dev.sara.implementations.ISortableService;
 
 @RestController
 @RequestMapping(path = "${api-endpoint}/requests")
 public class RequestController {
-    private final IGenericService<RequestDTOResponse, RequestDTORequest> service;
+    private final ISortableService<RequestDTOResponse, RequestDTORequest> service;
     private final RequestServiceImpl requestService;
 
-    public RequestController(IGenericService<RequestDTOResponse, RequestDTORequest> service, RequestServiceImpl requestService) {
+    public RequestController(ISortableService<RequestDTOResponse, RequestDTORequest> service, RequestServiceImpl requestService) {
         this.service = service;
         this.requestService = requestService;
     }
