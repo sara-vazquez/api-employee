@@ -75,5 +75,17 @@ public class RequestServiceImpl implements ISortableService<RequestDTOResponse, 
 
         return RequestMapper.toDTO(repository.save(existing));
     }
+
+    public void deleteRequest(Long id) {
+        RequestEntity request = repository.findById(id)
+        .orElseThrow(() -> new RequestNotFoundException("Solicitud no encontrada"));
+
+        if (!request.isAttended()) {
+            throw new IllegalStateException("No se puede eliminar una solicitud pendiente");
+        }
+    
+        repository.delete(request);
+
+    }
     
 }
