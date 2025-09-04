@@ -8,12 +8,12 @@ import org.springframework.stereotype.Service;
 
 import dev.sara.exceptions.RequestNotFoundException;
 import dev.sara.exceptions.TopicNotFoundException;
-import dev.sara.implementations.IGenericService;
+import dev.sara.implementations.ISortableService;
 import dev.sara.topics.TopicEntity;
 import dev.sara.topics.TopicRepository;
 
 @Service
-public class RequestServiceImpl implements IGenericService<RequestDTOResponse, RequestDTORequest> {
+public class RequestServiceImpl implements ISortableService<RequestDTOResponse, RequestDTORequest> {
 
     private final RequestRepository repository;
     private final TopicRepository topicRepository;
@@ -74,7 +74,6 @@ public class RequestServiceImpl implements IGenericService<RequestDTOResponse, R
         existing.setTopic(topic);
 
         return RequestMapper.toDTO(repository.save(existing));
-
     }
     
 }
