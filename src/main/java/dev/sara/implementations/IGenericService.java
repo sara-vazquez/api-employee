@@ -11,4 +11,6 @@ public interface IGenericService<T, S> {
     public List<T> getEntitiesSortedByDate();
 
     public T getEntityById(Long id);
+
+    public T updateEntity(Long id, S dto);
 }

@@ -57,6 +57,7 @@ public class RequestServiceImpl implements IGenericService<RequestDTOResponse, R
                 .orElseThrow(() -> new RequestNotFoundException("No se ha encontrado la solicitud con id: " + id ));    
     }
 
+    @Override
     public RequestDTOResponse updateEntity(Long id, RequestDTORequest dto) {
         RequestEntity existing = repository.findById(id)
         .orElseThrow(() -> new RequestNotFoundException("No se ha encontrado la solicitud con id: " + id));

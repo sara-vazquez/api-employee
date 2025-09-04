@@ -11,6 +11,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -36,10 +37,7 @@ public class RequestControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
-    private IGenericService<RequestDTOResponse, RequestDTORequest> service;
-
-    @MockitoBean
-    private RequestServiceImpl requestService;
+    private IGenericService<RequestDTOResponse, RequestDTORequest> requestService;
 
     @Autowired
     ObjectMapper mapper;
