@@ -1,10 +1,13 @@
 package dev.sara.technician;
 
+import dev.sara.attendance.AttendanceEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,6 +21,10 @@ public class TechnicianEntity {
 
     @Column(nullable = false, unique = true)
     private String technicianName;
+
+    @OneToOne(mappedBy="technician", cascade = CascadeType.ALL)
+    private AttendanceEntity attendance;
+
 
     public TechnicianEntity(String technicianName) {
         this.technicianName = technicianName;
@@ -38,7 +45,14 @@ public class TechnicianEntity {
     public void setTechnicianName(String technicianName) {
         this.technicianName = technicianName;
     }
-    
+
+    public AttendanceEntity getAttendance() {
+        return attendance;
+    }
+
+    public void setAttendance(AttendanceEntity attendance) {
+        this.attendance = attendance;
+    }
 
     public TechnicianEntity() {}
 }

@@ -3,8 +3,10 @@ package dev.sara.request;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import dev.sara.attendance.AttendanceEntity;
 import dev.sara.builder.RequestEntityBuilder;
 import dev.sara.topics.TopicEntity;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -48,6 +51,9 @@ public class RequestEntity {
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt; 
+
+    @OneToOne(mappedBy= "request", cascade = CascadeType.ALL)
+    private AttendanceEntity attendance;
 
     public RequestEntity(Long id, String name, LocalDate date, TopicEntity topic, String description, boolean attended ) {
         this.id = id;
@@ -120,6 +126,14 @@ public class RequestEntity {
 
     public void setUpdatedAt(LocalDateTime updatedAt) { 
         this.updatedAt = updatedAt; 
+    }
+
+    public AttendanceEntity getAttendance() {
+        return attendance;
+    }
+
+    public void setAttendance(AttendanceEntity attendance) {
+        this.attendance = attendance;
     }
 
     //nos devuelve el builder a través de un método estático
