@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import dev.sara.exceptions.RequestException;
 import dev.sara.exceptions.RequestNotFoundException;
 import dev.sara.exceptions.TopicNotFoundException;
 import dev.sara.implementations.ISortableService;
@@ -81,7 +82,7 @@ public class RequestServiceImpl implements ISortableService<RequestDTOResponse, 
         .orElseThrow(() -> new RequestNotFoundException("Solicitud no encontrada"));
 
         if (!request.isAttended()) {
-            throw new IllegalStateException("No se puede eliminar una solicitud pendiente");
+        throw new RequestException("No se puede eliminar una solicitud pendiente");
         }
     
         repository.delete(request);

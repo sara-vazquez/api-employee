@@ -9,6 +9,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import static org.mockito.ArgumentMatchers.any;
@@ -19,6 +21,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import dev.sara.exceptions.RequestException;
 import dev.sara.topics.TopicEntity;
 import dev.sara.topics.TopicRepository;
 
@@ -112,6 +115,31 @@ public class RequestServiceImplTest {
     verify(topicRepository).findById(2L);
     verify(repository).save(existing);
 }
+
+@Test
+void testDeleteRequest_Attended_ShouldDelete() {
+    RequestEntity request = new RequestEntity();
+    request.setId(1L);
+    request.setAttended(true);
+
+    when(repository.findById(1L)).thenReturn(Optional.of(request));
+
+    requestService.deleteRequest(1L);
+
+    verify(repository).delete(request);
+}
+
+@Test
+void testDeleteRequest_Pending_ShouldThrowException() {
+    RequestEntity request = new RequestEntity();
+    request.setId(2L);
+    request.setAttended(false);
+
+    when(repository.findById(2L)).thenReturn(Optional.of(request));
+
+    assertThrows(RequestException.class, () -> requestService.deleteRequest(2L));
+}
+
 
 
     
