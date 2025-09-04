@@ -28,16 +28,16 @@ public class AttendanceEntity {
 
     @OneToOne
     @JoinColumn(name = "request_id", nullable = false, unique = true)
-    private RequestEntity requestId;
+    private RequestEntity request;
 
     @OneToOne
     @JoinColumn(name = "technician_id", nullable = false, unique = true)
-    private TechnicianEntity technicianId;
+    private TechnicianEntity technician;
 
-    public AttendanceEntity(LocalDateTime attendedAt, RequestEntity requestId, TechnicianEntity technicianId) {
+    public AttendanceEntity(LocalDateTime attendedAt, RequestEntity request, TechnicianEntity technician) {
         this.attendedAt = attendedAt;
-        this.requestId = requestId;
-        this.technicianId = technicianId;
+        this.request = request;
+        this.technician = technician;
 
     }
 
@@ -60,19 +60,19 @@ public class AttendanceEntity {
     }
 
     public RequestEntity getRequest() {
-        return requestId;
+        return request;
     }
 
-    public void setRequest(RequestEntity requestId) {
-        this.requestId = requestId;
+    public void setRequest(RequestEntity request) {
+        this.request = request;
     }
 
     public TechnicianEntity getTechnician() {
-        return technicianId;
+        return technician;
     }
 
-    public void setTechnician(TechnicianEntity technicianId) {
-        this.technicianId = technicianId;
+    public void setTechnician(TechnicianEntity technician) {
+        this.technician = technician;
     }
 
 }
