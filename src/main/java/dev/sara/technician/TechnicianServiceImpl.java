@@ -47,6 +47,4 @@ public class TechnicianServiceImpl implements IGenericService<TechnicianDTORespo
         TechnicianEntity updated = repository.save(existing);
             return TechnicianMapper.toDTO(updated);
     }
-
-
 }
