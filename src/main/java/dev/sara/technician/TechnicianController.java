@@ -51,6 +51,4 @@ public class TechnicianController {
         TechnicianDTOResponse updated = service.updateEntity(id, dtoRequest);
         return ResponseEntity.ok(updated);
     }
-
-    
 }
