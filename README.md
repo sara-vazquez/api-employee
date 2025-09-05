@@ -19,23 +19,23 @@ config:
 erDiagram
     TOPICS {
         LONG id_topic PK "AUTO_INCREMENT"
-        VARCHAR name UK "NOT NULL, UNIQUE"
+        STRING name UK "NOT NULL, UNIQUE"
     }
     
     REQUESTS {
         LONG id_request PK "AUTO_INCREMENT"
-        VARCHAR name "NOT NULL"
+        STRING name "NOT NULL"
         DATE date "NOT NULL"
         LONG topic_id FK "NOT NULL"
-        TEXT description "NOT NULL"
+        STRING description "NOT NULL, TEXT"
         BOOLEAN attended "DEFAULT FALSE"
-        TIMESTAMP created_at "NOT NULL"
-        TIMESTAMP updated_at
+        TIMESTAMP created_at "NOT NULL, UPDATABLE=FALSE"
+        TIMESTAMP updated_at "NULLABLE"
     }
     
     TECHNICIANS {
         LONG id_technicians PK "AUTO_INCREMENT"
-        VARCHAR technician_name UK "NOT NULL, UNIQUE"
+        STRING technician_name UK "NOT NULL, UNIQUE"
     }
     
     ATTENDANCES {
