@@ -72,6 +72,8 @@ Follow these steps to get the project up and running:
 
 
 ## 📯 Postman
+![postman screenshot showing collection](postman.png)
+
 [Postman collection link](https://lunar-rocket-4378638.postman.co/workspace/API-practice~317c143d-3828-4b04-8929-47a76e03adfa/collection/45994293-eca8c853-f45b-482e-a2b3-6d3d346eec15?action=share&creator=45994293)
 
 ## 🧪 Test Coverage
