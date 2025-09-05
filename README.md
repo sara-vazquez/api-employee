@@ -259,8 +259,8 @@ Remember to execute the application, then go to:
 ```
 http://localhost:8080/swagger-ui/index.html
 ```
-![technicians and requests controllers](swagger1.png)
-![schemas, attendances and topics controllers](swagger2.png)
+![technicians and requests controllers](src/api-swagger-docs/swagger1.png)
+![schemas, attendances and topics controllers](src/api-swagger-docs/swagger2.png)
 
 ## ⚙️ Execution
 Follow these steps to get the project up and running:
