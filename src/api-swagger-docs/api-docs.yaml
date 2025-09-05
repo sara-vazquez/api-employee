@@ -1,0 +1,324 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /api/v1/technicians/{id}:
+    get:
+      tags:
+      - technician-controller
+      operationId: getEntityById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TechnicianDTOResponse"
+    put:
+      tags:
+      - technician-controller
+      operationId: updateEntity
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TechnicianDTORequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TechnicianDTOResponse"
+  /api/v1/requests/{id}:
+    get:
+      tags:
+      - request-controller
+      operationId: getEntityById_1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/RequestDTOResponse"
+    put:
+      tags:
+      - request-controller
+      operationId: updatRequest
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestDTORequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/RequestDTOResponse"
+    delete:
+      tags:
+      - request-controller
+      operationId: deleteRequest
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+  /api/v1/technicians:
+    get:
+      tags:
+      - technician-controller
+      operationId: getEntities
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TechnicianDTOResponse"
+    post:
+      tags:
+      - technician-controller
+      operationId: storeEntity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TechnicianDTORequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TechnicianDTOResponse"
+  /api/v1/requests:
+    get:
+      tags:
+      - request-controller
+      operationId: getEntities_1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RequestDTOResponse"
+    post:
+      tags:
+      - request-controller
+      operationId: storeEntity_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RequestDTORequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/RequestDTOResponse"
+  /api/v1/attendances:
+    post:
+      tags:
+      - attendance-controller
+      operationId: markAsAttended
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AttendanceDTORequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/AttendanceDTOResponse"
+  /api/v1/topics:
+    get:
+      tags:
+      - topic-controller
+      operationId: getAllTopics
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TopicDTOResponse"
+  /api/v1/topics/{id}:
+    get:
+      tags:
+      - topic-controller
+      operationId: getTopicById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/TopicDTOResponse"
+  /api/v1/requests/date:
+    get:
+      tags:
+      - request-controller
+      operationId: getRequestsSortedByDate
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RequestDTOResponse"
+components:
+  schemas:
+    TechnicianDTORequest:
+      type: object
+      properties:
+        technicianName:
+          type: string
+    TechnicianDTOResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        technicianName:
+          type: string
+    RequestDTORequest:
+      type: object
+      properties:
+        name:
+          type: string
+        date:
+          type: string
+          format: date
+        topicId:
+          type: integer
+          format: int64
+        description:
+          type: string
+        attended:
+          type: boolean
+    RequestDTOResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        date:
+          type: string
+          format: date
+        topicId:
+          type: integer
+          format: int64
+        description:
+          type: string
+        attended:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    AttendanceDTORequest:
+      type: object
+      properties:
+        attendedAt:
+          type: string
+          format: date-time
+        request:
+          type: integer
+          format: int64
+        technician:
+          type: integer
+          format: int64
+    AttendanceDTOResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        attendedAt:
+          type: string
+          format: date-time
+        request:
+          type: integer
+          format: int64
+        technician:
+          type: integer
+          format: int64
+    TopicDTOResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
