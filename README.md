@@ -9,6 +9,209 @@ A startup has requested the construction of an API to be consumed by its web app
 
 ## 🎯 Diagrams 
 ### Class diagram
+```mermaid
+---
+config:
+  theme: 'forest'
+---
+classDiagram
+    %% ========== INTERFACES ==========
+    class IGenericService~T, S~ {
+        <<interface>>
+        +getEntities() List~T~
+        +storeEntity(S) T
+        +getEntityById(Long) T
+        +updateEntity(Long, S) T
+    }
+    
+    class ITopicService~T~ {
+        <<interface>>
+        +getAllEntities() List~T~
+        +findById(Long) T
+    }
+    
+    class ISortableService~T, S~ {
+        <<interface>>
+        +getEntitiesSortedByDate() List~T~
+    }
+    
+    class IAttendanceService {
+        <<interface>>
+        +markAsAttended(AttendanceDTORequest) AttendanceDTOResponse
+    }
+    
+    %% ========== ENTITIES ==========
+    class RequestEntity {
+        <<@Entity>>
+        -Long id
+        -String name
+        -LocalDate date
+        -TopicEntity topic
+        -String description
+        -boolean attended
+        -LocalDateTime createdAt
+        -LocalDateTime updatedAt
+        -AttendanceEntity attendance
+    }
+    
+    class TopicEntity {
+        <<@Entity>>
+        -Long id
+        -String name
+    }
+    
+    class TechnicianEntity {
+        <<@Entity>>
+        -Long id
+        -String technicianName
+        -AttendanceEntity attendance
+    }
+    
+    class AttendanceEntity {
+        <<@Entity>>
+        -Long id
+        -LocalDateTime attendedAt
+        -RequestEntity request
+        -TechnicianEntity technician
+    }
+    
+    %% ========== DTOs ==========
+    class RequestDTORequest {
+        <<record>>
+        +String name
+        +LocalDate date
+        +Long topicId
+        +String description
+        +boolean attended
+    }
+    
+    class RequestDTOResponse {
+        <<record>>
+        +Long id
+        +String name
+        +LocalDate date
+        +Long topicId
+        +String description
+        +boolean attended
+        +LocalDateTime createdAt
+        +LocalDateTime updatedAt
+    }
+    
+    class TopicDTORequest {
+        <<record>>
+        +String name
+    }
+    
+    class TopicDTOResponse {
+        <<record>>
+        +Long id
+        +String name
+    }
+    
+    class TechnicianDTORequest {
+        <<record>>
+        +String technicianName
+    }
+    
+    class TechnicianDTOResponse {
+        <<record>>
+        +Long id
+        +String technicianName
+    }
+    
+    class AttendanceDTORequest {
+        <<record>>
+        +LocalDateTime attendedAt
+        +Long request
+        +Long technician
+    }
+    
+    class AttendanceDTOResponse {
+        <<record>>
+        +Long id
+        +LocalDateTime attendedAt
+        +Long request
+        +Long technician
+    }
+    
+    %% ========== CONTROLLERS ==========
+    class RequestController {
+        <<@RestController>>
+    }
+    
+    class TopicController {
+        <<@RestController>>
+    }
+    
+    class TechnicianController {
+        <<@RestController>>
+    }
+    
+    class AttendanceController {
+        <<@RestController>>
+    }
+    
+    %% ========== SERVICES ==========
+    class RequestServiceImpl {
+        <<@Service>>
+    }
+    
+    class TopicServiceImpl {
+        <<@Service>>
+    }
+    
+    class TechnicianServiceImpl {
+        <<@Service>>
+    }
+    
+    class AttendanceServiceImpl {
+        <<@Service>>
+    }
+    
+    %% ========== REPOSITORIES ==========
+    class RequestRepository {
+        <<@Repository>><<interface>>
+    }
+    
+    class TopicRepository {
+        <<@Repository>><<interface>>
+    }
+    
+    class TechnicianRepository {
+        <<@Repository>><<interface>>
+    }
+    
+    class AttendanceRepository {
+        <<@Repository>><<interface>>
+    }
+    
+    %% ========== MAPPERS ==========
+    class RequestMapper
+    class TopicMapper
+    class TechnicianMapper
+    class AttendanceMapper
+    
+    %% ========== RELACIONES ==========
+    TopicEntity "1" --> "*" RequestEntity : "@ManyToOne"
+    RequestEntity "1" --> "1" AttendanceEntity : "@OneToOne"
+    TechnicianEntity "1" --> "1" AttendanceEntity : "@OneToOne"
+    AttendanceEntity "*" --> "1" RequestEntity : "request"
+    AttendanceEntity "*" --> "1" TechnicianEntity : "technician"
+    
+    ISortableService --|> IGenericService : extends
+    
+    RequestServiceImpl ..|> ISortableService
+    TopicServiceImpl ..|> ITopicService
+    TechnicianServiceImpl ..|> IGenericService
+    AttendanceServiceImpl ..|> IAttendanceService
+    
+    RequestController --> ISortableService
+    RequestController --> RequestServiceImpl
+    TopicController --> ITopicService
+    TechnicianController --> IGenericService
+    AttendanceController --> IAttendanceService
+
+```
 
 ### Database schema
 ```mermaid
