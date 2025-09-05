@@ -1,24 +1,21 @@
 package dev.sara.attendance;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.time.LocalDateTime;
+import java.util.Optional;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDateTime;
-import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import dev.sara.exceptions.AttendanceException;
 import dev.sara.exceptions.RequestException;
 import dev.sara.request.RequestEntity;
 import dev.sara.request.RequestRepository;
